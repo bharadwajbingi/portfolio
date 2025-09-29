@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { ProjectCard } from './ProjectCard';
-import { Button } from './ui/button';
-import { profile } from '@/data/profile';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { ProjectCard } from "./ProjectCard";
+import { Button } from "./ui/button";
+import { profile } from "@/data/profile";
 
 export function Projects() {
-  const featuredProjects = profile.projects.filter(p => p.featured);
-  
+  const featuredProjects = profile.projects.filter((p) => p.featured);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -20,7 +20,6 @@ export function Projects() {
       },
     },
   };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -28,7 +27,7 @@ export function Projects() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: "easeOut" as any,
       },
     },
   };
@@ -47,7 +46,8 @@ export function Projects() {
               Featured <span className="text-primary">Projects</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6">
-              A showcase of applications I've built, featuring modern technologies and user-centric design
+              A showcase of applications I've built, featuring modern
+              technologies and user-centric design
             </p>
             <Button asChild variant="outline" className="group">
               <Link href="/projects">
@@ -59,11 +59,7 @@ export function Projects() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {featuredProjects.map((project, index) => (
-              <ProjectCard 
-                key={project.id} 
-                project={project} 
-                index={index}
-              />
+              <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
         </motion.div>

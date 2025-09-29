@@ -1,11 +1,19 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Mail, Phone, Copy, MapPin, Github, Linkedin, Twitter } from 'lucide-react';
-import { Card } from './ui/card';
-import { Button } from './ui/button';
-import { toast } from 'sonner';
-import { profile } from '@/data/profile';
+import { motion } from "framer-motion";
+import {
+  Mail,
+  Phone,
+  Copy,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+} from "lucide-react";
+import { Card } from "./ui/card";
+import { Button } from "./ui/button";
+import { toast } from "sonner";
+import { profile } from "@/data/profile";
 
 const socialIcons = {
   github: Github,
@@ -14,13 +22,12 @@ const socialIcons = {
 };
 
 export function ContactForm() {
-
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      toast.success('Copied to clipboard!');
+      toast.success("Copied to clipboard!");
     } catch {
-      toast.error('Failed to copy');
+      toast.error("Failed to copy");
     }
   };
 
@@ -34,7 +41,6 @@ export function ContactForm() {
       },
     },
   };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -42,7 +48,7 @@ export function ContactForm() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: "easeOut" as any,
       },
     },
   };
@@ -68,8 +74,10 @@ export function ContactForm() {
           <div className="max-w-2xl mx-auto">
             <motion.div variants={itemVariants}>
               <Card className="p-6 bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/60 transition-all duration-200">
-                <h3 className="text-xl font-semibold mb-6 text-primary">Contact Information</h3>
-                
+                <h3 className="text-xl font-semibold mb-6 text-primary">
+                  Contact Information
+                </h3>
+
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="p-2 bg-primary/10 rounded-lg">
@@ -78,7 +86,7 @@ export function ContactForm() {
                     <div className="flex-1">
                       <p className="font-medium">Email</p>
                       <div className="flex items-center space-x-2">
-                        <a 
+                        <a
                           href={`mailto:${profile.personal.email}`}
                           className="text-muted-foreground hover:text-primary transition-colors duration-200"
                         >
@@ -87,7 +95,9 @@ export function ContactForm() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => copyToClipboard(profile.personal.email)}
+                          onClick={() =>
+                            copyToClipboard(profile.personal.email)
+                          }
                           className="h-auto p-1"
                         >
                           <Copy className="h-3 w-3" />
@@ -103,7 +113,7 @@ export function ContactForm() {
                     <div className="flex-1">
                       <p className="font-medium">Phone</p>
                       <div className="flex items-center space-x-2">
-                        <a 
+                        <a
                           href={`tel:${profile.personal.phone}`}
                           className="text-muted-foreground hover:text-primary transition-colors duration-200"
                         >
@@ -112,7 +122,9 @@ export function ContactForm() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => copyToClipboard(profile.personal.phone)}
+                          onClick={() =>
+                            copyToClipboard(profile.personal.phone)
+                          }
                           className="h-auto p-1"
                         >
                           <Copy className="h-3 w-3" />
@@ -127,7 +139,9 @@ export function ContactForm() {
                     </div>
                     <div>
                       <p className="font-medium">Location</p>
-                      <p className="text-muted-foreground">{profile.personal.location}</p>
+                      <p className="text-muted-foreground">
+                        {profile.personal.location}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -137,7 +151,8 @@ export function ContactForm() {
                   <p className="font-medium mb-3">Connect with me</p>
                   <div className="flex space-x-3">
                     {profile.social.map((social) => {
-                      const IconComponent = socialIcons[social.icon as keyof typeof socialIcons];
+                      const IconComponent =
+                        socialIcons[social.icon as keyof typeof socialIcons];
                       return (
                         <Button
                           key={social.platform}
@@ -146,8 +161,14 @@ export function ContactForm() {
                           size="sm"
                           className="hover:bg-primary/10 hover:border-primary/20"
                         >
-                          <a href={social.url} target="_blank" rel="noopener noreferrer">
-                            {IconComponent && <IconComponent className="h-4 w-4" />}
+                          <a
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {IconComponent && (
+                              <IconComponent className="h-4 w-4" />
+                            )}
                             {social.platform}
                           </a>
                         </Button>

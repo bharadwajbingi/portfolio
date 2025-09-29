@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Building, Calendar, MapPin } from 'lucide-react';
-import { Card } from './ui/card';
-import { Badge } from './ui/badge';
-import { profile } from '@/data/profile';
+import { motion } from "framer-motion";
+import { Building, Calendar, MapPin } from "lucide-react";
+import { Card } from "./ui/card";
+import { Badge } from "./ui/badge";
+import { profile } from "@/data/profile";
 
 export function Experience() {
   const containerVariants = {
@@ -17,15 +17,14 @@ export function Experience() {
       },
     },
   };
-
   const itemVariants = {
-    hidden: { opacity: 0, x: -30 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
-      x: 0,
+      y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: "easeOut" as any,
       },
     },
   };
@@ -58,14 +57,18 @@ export function Experience() {
                   key={exp.id}
                   variants={itemVariants}
                   className={`relative flex items-center ${
-                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                    index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                   }`}
                 >
                   {/* Timeline Dot */}
                   <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 w-3 h-3 bg-primary rounded-full border-4 border-background shadow-lg z-10" />
 
                   {/* Content Card */}
-                  <div className={`ml-12 md:ml-0 ${index % 2 === 0 ? 'md:mr-8 md:ml-0' : 'md:ml-8 md:mr-0'} md:w-1/2`}>
+                  <div
+                    className={`ml-12 md:ml-0 ${
+                      index % 2 === 0 ? "md:mr-8 md:ml-0" : "md:ml-8 md:mr-0"
+                    } md:w-1/2`}
+                  >
                     <Card className="p-6 bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/60 transition-all duration-200 group">
                       {/* Header */}
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
@@ -95,7 +98,10 @@ export function Experience() {
                       {/* Description */}
                       <ul className="space-y-2 mb-4">
                         {exp.description.map((item, i) => (
-                          <li key={i} className="text-sm text-muted-foreground flex items-start">
+                          <li
+                            key={i}
+                            className="text-sm text-muted-foreground flex items-start"
+                          >
                             <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 mr-3 flex-shrink-0" />
                             {item}
                           </li>
@@ -104,10 +110,16 @@ export function Experience() {
 
                       {/* Technologies */}
                       <div>
-                        <p className="text-xs font-medium text-primary mb-2">Key Technologies</p>
+                        <p className="text-xs font-medium text-primary mb-2">
+                          Key Technologies
+                        </p>
                         <div className="flex flex-wrap gap-1">
                           {exp.technologies.map((tech) => (
-                            <Badge key={tech} variant="outline" className="text-xs bg-muted/50">
+                            <Badge
+                              key={tech}
+                              variant="outline"
+                              className="text-xs bg-muted/50"
+                            >
                               {tech}
                             </Badge>
                           ))}

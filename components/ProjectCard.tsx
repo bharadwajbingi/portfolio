@@ -1,9 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { ExternalLink, Github, Star } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -29,7 +28,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
@@ -37,13 +36,18 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       transition: {
         duration: 0.6,
         delay: index * 0.1,
-        ease: "easeOut",
+        ease: "easeOut" as const, // ✅ fix typing issue
       },
     },
   };
 
   return (
-    <motion.div variants={cardVariants} className="group">
+    <motion.div
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+      className="group"
+    >
       <Card
         className={cn(
           "overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/60 transition-all duration-200 h-full",

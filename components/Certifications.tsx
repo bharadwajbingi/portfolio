@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Award, ExternalLink } from 'lucide-react';
-import { Card } from './ui/card';
-import { Button } from './ui/button';
-import { profile } from '@/data/profile';
+import { motion } from "framer-motion";
+import { Award, ExternalLink } from "lucide-react";
+import { Card } from "./ui/card";
+import { Button } from "./ui/button";
+import { profile } from "@/data/profile";
 
 export function Certifications() {
   const containerVariants = {
@@ -17,7 +17,6 @@ export function Certifications() {
       },
     },
   };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -25,13 +24,16 @@ export function Certifications() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: "easeOut" as any,
       },
     },
   };
 
   return (
-    <section id="certifications" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/20">
+    <section
+      id="certifications"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/20"
+    >
       <div className="max-w-6xl mx-auto">
         <motion.div
           variants={containerVariants}
@@ -64,8 +66,18 @@ export function Certifications() {
                         {cert.issuer} • {cert.date}
                       </p>
                       {cert.url && (
-                        <Button asChild variant="ghost" size="sm" className="h-auto p-0 text-xs">
-                          <a href={cert.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center">
+                        <Button
+                          asChild
+                          variant="ghost"
+                          size="sm"
+                          className="h-auto p-0 text-xs"
+                        >
+                          <a
+                            href={cert.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center"
+                          >
                             View Certificate
                             <ExternalLink className="ml-1 h-3 w-3" />
                           </a>

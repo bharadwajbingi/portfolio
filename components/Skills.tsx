@@ -1,27 +1,31 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Badge } from './ui/badge';
-import { Card } from './ui/card';
-import { profile } from '@/data/profile';
-import { cn } from '@/lib/utils';
+import { motion } from "framer-motion";
+import { Badge } from "./ui/badge";
+import { Card } from "./ui/card";
+import { profile } from "@/data/profile";
+import { cn } from "@/lib/utils";
 
 const colorMap = {
-  blue: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700',
-  green: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700',
-  purple: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700',
-  orange: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700',
-  red: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700',
-  indigo: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700',
+  blue: "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
+  green:
+    "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
+  purple:
+    "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
+  orange:
+    "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
+  red: "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
+  indigo:
+    "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
 };
 
 const proficiencyColors = {
-  blue: 'bg-slate-400',
-  green: 'bg-slate-400',
-  purple: 'bg-slate-400',
-  orange: 'bg-slate-400',
-  red: 'bg-slate-400',
-  indigo: 'bg-slate-400',
+  blue: "bg-slate-400",
+  green: "bg-slate-400",
+  purple: "bg-slate-400",
+  orange: "bg-slate-400",
+  red: "bg-slate-400",
+  indigo: "bg-slate-400",
 };
 
 export function Skills() {
@@ -35,7 +39,6 @@ export function Skills() {
       },
     },
   };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -43,7 +46,7 @@ export function Skills() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: "easeOut" as any,
       },
     },
   };
@@ -55,7 +58,7 @@ export function Skills() {
       scale: 1,
       transition: {
         duration: 0.4,
-        ease: 'easeOut',
+        ease: "easeOut",
       },
     },
   };
@@ -87,9 +90,9 @@ export function Skills() {
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {category.skills.map((skill, skillIndex) => (
-                      <Badge 
+                      <Badge
                         key={skill.name}
-                        variant="secondary" 
+                        variant="secondary"
                         className={cn(
                           "transition-colors duration-200 cursor-default text-xs font-medium",
                           colorMap[category.color as keyof typeof colorMap]

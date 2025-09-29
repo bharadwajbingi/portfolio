@@ -1,32 +1,38 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Filter, X } from 'lucide-react';
-import Link from 'next/link';
-import { Navbar } from '@/components/Navbar';
-import { ProjectCard } from '@/components/ProjectCard';
-import { Footer } from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { profile } from '@/data/profile';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Filter, X } from "lucide-react";
+import Link from "next/link";
+import { Navbar } from "@/components/Navbar";
+import { ProjectCard } from "@/components/ProjectCard";
+import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { profile } from "@/data/profile";
 
 export default function ProjectsPage() {
-  const [selectedFilter, setSelectedFilter] = useState<string>('All');
+  const [selectedFilter, setSelectedFilter] = useState<string>("All");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // Get unique categories
-  const categories = ['All', ...new Set(profile.projects.map(p => p.category))];
-  
-  // Get unique tech tags for filtering
-  const allTechTags = [...new Set(profile.projects.flatMap(p => p.tech))];
-  
+  const categories = [
+    "All",
+    ...Array.from(new Set(profile.projects.map((p) => p.category))),
+  ];
+
+  const allTechTags = Array.from(
+    new Set(profile.projects.flatMap((p) => p.tech))
+  );
+
   // Filter projects
-  const filteredProjects = selectedFilter === 'All' 
-    ? profile.projects 
-    : profile.projects.filter(p => 
-        p.category === selectedFilter || p.tech.includes(selectedFilter)
-      );
+  const filteredProjects =
+    selectedFilter === "All"
+      ? profile.projects
+      : profile.projects.filter(
+          (p) =>
+            p.category === selectedFilter || p.tech.includes(selectedFilter)
+        );
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -38,7 +44,6 @@ export default function ProjectsPage() {
       },
     },
   };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -46,7 +51,7 @@ export default function ProjectsPage() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: "easeOut" as any,
       },
     },
   };
@@ -54,7 +59,7 @@ export default function ProjectsPage() {
   return (
     <main className="relative min-h-screen">
       <Navbar />
-      
+
       {/* Gradient Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-50/30 via-transparent to-slate-50/30 dark:from-slate-950/30 dark:via-transparent dark:to-slate-950/30" />
@@ -66,13 +71,14 @@ export default function ProjectsPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h1 className="text-4xl sm:text-5xl font-bold mb-6">
               My <span className="text-primary">Projects</span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              A comprehensive showcase of applications I've built, featuring modern technologies and innovative solutions
+              A comprehensive showcase of applications I've built, featuring
+              modern technologies and innovative solutions
             </p>
             <Button asChild variant="outline">
               <Link href="/">← Back to Home</Link>
@@ -94,7 +100,7 @@ export default function ProjectsPage() {
               <Filter className="h-5 w-5 text-muted-foreground" />
               <span className="text-sm font-medium">Filter by:</span>
             </div>
-            
+
             {/* Desktop Filters */}
             <div className="hidden sm:flex flex-wrap gap-2">
               {categories.map((category) => (
@@ -129,7 +135,7 @@ export default function ProjectsPage() {
             {isFilterOpen && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 className="sm:hidden mb-6"
               >
@@ -137,7 +143,9 @@ export default function ProjectsPage() {
                   {categories.map((category) => (
                     <Button
                       key={category}
-                      variant={selectedFilter === category ? "default" : "outline"}
+                      variant={
+                        selectedFilter === category ? "default" : "outline"
+                      }
                       size="sm"
                       onClick={() => {
                         setSelectedFilter(category);
@@ -156,9 +164,16 @@ export default function ProjectsPage() {
           {/* Project Count */}
           <div className="mb-8">
             <p className="text-sm text-muted-foreground">
-              Showing {filteredProjects.length} of {profile.projects.length} projects
-              {selectedFilter !== 'All' && (
-                <span> in <Badge variant="secondary" className="ml-1">{selectedFilter}</Badge></span>
+              Showing {filteredProjects.length} of {profile.projects.length}{" "}
+              projects
+              {selectedFilter !== "All" && (
+                <span>
+                  {" "}
+                  in{" "}
+                  <Badge variant="secondary" className="ml-1">
+                    {selectedFilter}
+                  </Badge>
+                </span>
               )}
             </p>
           </div>
@@ -200,7 +215,10 @@ export default function ProjectsPage() {
               <p className="text-muted-foreground text-lg mb-4">
                 No projects found for "{selectedFilter}"
               </p>
-              <Button onClick={() => setSelectedFilter('All')} variant="outline">
+              <Button
+                onClick={() => setSelectedFilter("All")}
+                variant="outline"
+              >
                 Show All Projects
               </Button>
             </motion.div>
