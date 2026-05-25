@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Mail, Phone, MapPin } from "lucide-react";
+import { GraduationCap, Mail, Phone, MapPin, User, Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
+import { Badge } from "./ui/badge";
 import { profile } from "@/data/profile";
+import { cn } from "@/lib/utils";
 
 export function About() {
   const containerVariants = {
@@ -12,116 +14,136 @@ export function About() {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        duration: 0.6,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
-        ease: "easeOut" as any,
+        duration: 0.7,
+        ease: [0.16, 1, 0.3, 1],
       },
     },
   };
 
   return (
-    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-muted/20">
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              About <span className="text-primary">Me</span>
+          {/* Header */}
+          <motion.div variants={itemVariants} className="text-center mb-16">
+            <Badge variant="outline" className="mb-4 text-primary bg-primary/5 border-primary/20">
+              <User className="w-3 h-3 mr-2" /> About Me
+            </Badge>
+            <h2 className="text-4xl sm:text-5xl font-extrabold mb-6 tracking-tight">
+              Who I <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">Am</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Passionate about creating innovative solutions and learning new
-              technologies
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+              Passionate about creating innovative solutions, writing clean code, and mastering new technologies to build impactful software.
             </p>
           </motion.div>
 
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Bio Section */}
-            <motion.div variants={itemVariants} className="lg:col-span-2">
-              <Card className="p-6 h-full bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/60 transition-all duration-200">
-                <div className="space-y-4">
-                  {profile.personal.bio.map((paragraph, index) => (
-                    <p
-                      key={index}
-                      className="text-muted-foreground leading-relaxed"
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
+            <motion.div variants={itemVariants} className="lg:col-span-2 flex flex-col">
+              <Card className="p-8 sm:p-10 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden group">
+                {/* Subtle gradient shimmer on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="p-3 bg-primary/10 rounded-2xl">
+                      <Sparkles className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground">My Story</h3>
+                  </div>
+                  
+                  <div className="space-y-6 text-muted-foreground/90 leading-relaxed text-lg">
+                    {profile.personal.bio.map((paragraph, index) => (
+                      <p key={index} className="relative pl-4 border-l-2 border-primary/20 hover:border-primary/60 transition-colors duration-300">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </Card>
             </motion.div>
 
-            {/* Quick Facts */}
-            <motion.div variants={itemVariants}>
-              <Card className="p-6 h-full bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/60 transition-all duration-200">
-                <h3 className="text-xl font-semibold mb-6 text-primary">
-                  Quick Facts
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <GraduationCap className="h-5 w-5 text-primary flex-shrink-0" />
+            {/* Quick Facts Section */}
+            <motion.div variants={itemVariants} className="flex flex-col">
+              <Card className="p-8 sm:p-10 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden">
+                <h3 className="text-2xl font-bold mb-8 text-foreground">Quick Facts</h3>
+                
+                <div className="space-y-6">
+                  {/* Education */}
+                  <div className="group flex items-start space-x-4 p-4 rounded-2xl hover:bg-secondary/40 transition-colors duration-300 border border-transparent hover:border-border/50">
+                    <div className="p-3 bg-primary/10 rounded-xl group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+                      <GraduationCap className="h-5 w-5 text-primary" />
+                    </div>
                     <div>
-                      <p className="text-sm font-medium">
+                      <p className="text-sm font-semibold text-foreground mb-1">Education</p>
+                      <p className="text-sm text-muted-foreground font-medium leading-snug">
                         {profile.personal.quickFacts.degree}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-muted-foreground/70 mt-1">
                         {profile.personal.quickFacts.education}
                       </p>
-                      <p className="text-xs text-muted-foreground">
-                        Graduating {profile.personal.quickFacts.gradDate}
-                      </p>
-                      {profile.personal.quickFacts.gpa && (
-                        <p className="text-xs text-muted-foreground">
-                          GPA: {profile.personal.quickFacts.gpa}
-                        </p>
-                      )}
+                      <Badge variant="secondary" className="mt-2 text-[10px] bg-primary/5 text-primary border-primary/20">
+                        Class of {profile.personal.quickFacts.gradDate}
+                      </Badge>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="h-5 w-5 text-primary flex-shrink-0" />
+                  {/* Location */}
+                  <div className="group flex items-center space-x-4 p-4 rounded-2xl hover:bg-secondary/40 transition-colors duration-300 border border-transparent hover:border-border/50">
+                    <div className="p-3 bg-blue-500/10 rounded-xl group-hover:bg-blue-500/20 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+                      <MapPin className="h-5 w-5 text-blue-500" />
+                    </div>
                     <div>
-                      <p className="text-sm font-medium">Location</p>
-                      <p className="text-xs text-muted-foreground">
-                        {profile.personal.location}
-                      </p>
+                      <p className="text-sm font-semibold text-foreground mb-0.5">Location</p>
+                      <p className="text-sm text-muted-foreground font-medium">{profile.personal.location}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-primary flex-shrink-0" />
+                  {/* Email */}
+                  <div className="group flex items-center space-x-4 p-4 rounded-2xl hover:bg-secondary/40 transition-colors duration-300 border border-transparent hover:border-border/50">
+                    <div className="p-3 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+                      <Mail className="h-5 w-5 text-emerald-500" />
+                    </div>
                     <div>
-                      <p className="text-sm font-medium">Email</p>
+                      <p className="text-sm font-semibold text-foreground mb-0.5">Email</p>
                       <a
                         href={`mailto:${profile.personal.email}`}
-                        className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200"
+                        className="text-sm text-muted-foreground font-medium hover:text-emerald-500 transition-colors duration-200"
                       >
                         {profile.personal.email}
                       </a>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3">
-                    <Phone className="h-5 w-5 text-primary flex-shrink-0" />
+                  {/* Phone */}
+                  <div className="group flex items-center space-x-4 p-4 rounded-2xl hover:bg-secondary/40 transition-colors duration-300 border border-transparent hover:border-border/50">
+                    <div className="p-3 bg-purple-500/10 rounded-xl group-hover:bg-purple-500/20 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+                      <Phone className="h-5 w-5 text-purple-500" />
+                    </div>
                     <div>
-                      <p className="text-sm font-medium">Phone</p>
+                      <p className="text-sm font-semibold text-foreground mb-0.5">Phone</p>
                       <a
                         href={`tel:${profile.personal.phone}`}
-                        className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200"
+                        className="text-sm text-muted-foreground font-medium hover:text-purple-500 transition-colors duration-200"
                       >
                         {profile.personal.phone}
                       </a>

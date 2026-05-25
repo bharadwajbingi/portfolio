@@ -4,10 +4,12 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { profile } from "@/data/profile";
+import { StarryBackground } from "@/components/StarryBackground";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -100,7 +102,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`scroll-smooth ${inter.variable}`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -112,17 +114,16 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        {/* TODO: Add analytics script (Plausible or GA4) */}
-        {/* TODO: Add sitemap generation with next-sitemap */}
       </head>
-      <body className={inter.className} suppressHydrationWarning>
+      <body className="antialiased min-h-screen bg-background text-foreground selection:bg-primary/20 selection:text-primary flex flex-col" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen bg-background">{children}</div>
+          <StarryBackground />
+          <div className="flex-1 relative">{children}</div>
           <Toaster />
         </ThemeProvider>
       </body>

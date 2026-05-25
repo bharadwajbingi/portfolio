@@ -1,113 +1,220 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Badge } from "./ui/badge";
-import { Card } from "./ui/card";
-import { profile } from "@/data/profile";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { motion, AnimatePresence, MotionConfig, useTime, useTransform } from "framer-motion";
+import { Brain, ShieldCheck, Key, UserCheck, Layers, CheckCircle, Cloud } from "lucide-react";
 
-const colorMap = {
-  blue: "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
-  green:
-    "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
-  purple:
-    "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
-  orange:
-    "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
-  red: "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
-  indigo:
-    "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700",
-};
-
-const proficiencyColors = {
-  blue: "bg-slate-400",
-  green: "bg-slate-400",
-  purple: "bg-slate-400",
-  orange: "bg-slate-400",
-  red: "bg-slate-400",
-  indigo: "bg-slate-400",
-};
+// Curated list of core technologies
+const coreSkills = [
+  { id: "java", name: "Java 17", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg", ring: 1 },
+  { id: "spring", name: "Spring Boot", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg", ring: 1 },
+  { id: "postgres", name: "PostgreSQL", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg", ring: 1 },
+  { id: "docker", name: "Docker", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg", ring: 1 },
+  { id: "python", name: "Python", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg", ring: 2 },
+  { id: "ts", name: "TypeScript", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg", ring: 2 },
+  { id: "aws", name: "AWS S3", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", ring: 2 },
+  { id: "github", name: "GitHub Actions", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg", fallback: Cloud, ring: 2 },
+  { id: "react", name: "React", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg", ring: 2 },
+  { id: "tailwind", name: "Tailwind CSS", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", ring: 2 },
+  { id: "security", name: "Spring Security", fallback: ShieldCheck, ring: 3 },
+  { id: "hibernate", name: "Hibernate", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/hibernate/hibernate-original.svg", ring: 3 },
+  { id: "jwt", name: "JWT", fallback: Key, ring: 3 },
+  { id: "oauth", name: "OAuth2", fallback: UserCheck, ring: 3 },
+  { id: "flyway", name: "Flyway", fallback: Layers, ring: 3 },
+  { id: "junit", name: "JUnit 5", fallback: CheckCircle, ring: 3 },
+];
 
 export function Skills() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        duration: 0.6,
-      },
-    },
-  };
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut" as any,
-      },
-    },
-  };
-
-  const skillVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut",
-      },
-    },
-  };
+  const [isOrbit, setIsOrbit] = useState(true);
 
   return (
-    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Technical <span className="text-primary">Skills</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A comprehensive toolkit for building modern web applications
+    <section id="skills" className="py-24 overflow-hidden relative border-y border-border/10 bg-background/50 min-h-[800px] flex items-center">
+      {/* Deep space glow effect - Reduced opacity to prevent washing out the sharp stars */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-primary/5 to-transparent opacity-40" />
+      
+      <div className="max-w-[1400px] mx-auto px-4 w-full relative z-10 flex flex-col lg:flex-row items-center gap-12">
+        
+        {/* Header Area (Left Side - 35%) */}
+        <div className="w-full lg:w-[35%] flex flex-col items-start text-left z-20 pointer-events-none">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground drop-shadow-[0_0_15px_rgba(var(--primary),0.3)]">
+            Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60 block mt-2">Ecosystem</span>
+          </h2>
+          
+          {/* Description Reveal */}
+          <div className="mt-6 w-full">
+            <p className="text-muted-foreground text-lg sm:text-xl font-medium leading-relaxed">
+              A robust arsenal of modern frameworks, cloud architectures, and enterprise tools powering scalable, high-performance applications.
             </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {profile.skills.map((category, index) => (
-              <motion.div key={category.category} variants={itemVariants}>
-                <Card className="p-6 h-full bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/60 transition-all duration-200 group">
-                  <h3 className="text-lg font-semibold mb-4 text-primary group-hover:text-primary/80 transition-colors duration-200">
-                    {category.category}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill, skillIndex) => (
-                      <Badge
-                        key={skill.name}
-                        variant="secondary"
-                        className={cn(
-                          "transition-colors duration-200 cursor-default text-xs font-medium",
-                          colorMap[category.color as keyof typeof colorMap]
-                        )}
-                      >
-                        {skill.name}
-                      </Badge>
-                    ))}
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
           </div>
-        </motion.div>
+        </div>
+
+        {/* Main Interactive Area (Right Side - 65%) */}
+        <div className="relative w-full lg:w-[65%] h-[600px] lg:h-[700px] flex items-center justify-center z-10 overflow-hidden">
+          <MotionConfig transition={{ type: "spring", bounce: 0.15, duration: 1.6 }}>
+            
+            <AnimatePresence mode="popLayout">
+              {isOrbit ? (
+                <OrbitLayout key="orbit" />
+              ) : (
+                <ScatteredLayout key="grid" />
+              )}
+            </AnimatePresence>
+
+            {/* Toggle Button (The Brain) - STATIC POSITION */}
+            <button
+              onClick={() => setIsOrbit(!isOrbit)}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-card/80 backdrop-blur-xl border-2 border-primary/60 rounded-full w-24 h-24 flex items-center justify-center shadow-[0_0_60px_rgba(var(--primary),0.6)] group hover:scale-110 transition-transform duration-500 cursor-pointer pointer-events-auto"
+            >
+              <Brain className="w-12 h-12 text-primary" />
+              <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-30" style={{ animationDuration: '2.5s' }} />
+            </button>
+
+          </MotionConfig>
+        </div>
+
+      </div>    </section>
+  );
+}
+
+// --- ORBIT LAYOUT ---
+function OrbitLayout() {
+  const ring1 = coreSkills.filter(s => s.ring === 1);
+  const ring2 = coreSkills.filter(s => s.ring === 2);
+  const ring3 = coreSkills.filter(s => s.ring === 3);
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.4, ease: "easeInOut" }}
+      className="absolute inset-0 flex items-center justify-center pointer-events-none"
+    >
+      <div className="relative w-[700px] h-[700px] flex items-center justify-center">
+        <OrbitRing radius={115} items={ring1} duration={25} />
+        <OrbitRing radius={195} items={ring2} duration={40} reverse />
+        <OrbitRing radius={280} items={ring3} duration={55} />
       </div>
-    </section>
+    </motion.div>
+  );
+}
+
+function OrbitRing({ radius, items, duration, reverse = false }: { radius: number; items: any[]; duration: number; reverse?: boolean }) {
+  return (
+    <>
+      <div 
+        className="absolute top-1/2 left-1/2 rounded-full border border-primary/20 border-dashed -translate-x-1/2 -translate-y-1/2"
+        style={{ width: radius * 2, height: radius * 2 }}
+      />
+      {items.map((skill, index) => (
+        <OrbitItem 
+          key={skill.id} 
+          skill={skill} 
+          radius={radius} 
+          duration={duration} 
+          reverse={reverse} 
+          index={index} 
+          total={items.length} 
+        />
+      ))}
+    </>
+  );
+}
+
+function OrbitItem({ skill, radius, duration, reverse, index, total }: any) {
+  const time = useTime();
+  const initialAngle = (index / total) * Math.PI * 2;
+  
+  const timeMultiplier = reverse ? -1 : 1;
+  const angularSpeed = (Math.PI * 2) / (duration * 1000) * timeMultiplier;
+
+  const x = useTransform(time, (t) => Math.cos(initialAngle + t * angularSpeed) * radius);
+  const y = useTransform(time, (t) => Math.sin(initialAngle + t * angularSpeed) * radius);
+
+  return (
+    <motion.div 
+      className="absolute top-1/2 left-1/2 -ml-7 -mt-7 pointer-events-auto"
+      style={{ x, y }}
+    >
+      <motion.div
+        layoutId={`skill-bubble-${skill.id}`}
+        className="relative group w-14 h-14 bg-card/95 backdrop-blur-md border border-primary/30 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(var(--primary),0.6)] cursor-default z-10"
+      >
+        <SkillIcon skill={skill} />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// --- SCATTERED CLOUD LAYOUT ---
+// Pre-calculated scattered positions to ensure a beautiful, non-overlapping cloud around the Brain
+const SCATTERED_POSITIONS = [
+  { x: -280, y: -180 },
+  { x: 0, y: -260 },
+  { x: 280, y: -180 },
+  { x: -380, y: -40 },
+  { x: 380, y: -40 },
+  { x: -300, y: 120 },
+  { x: 300, y: 120 },
+  { x: -180, y: 240 },
+  { x: 180, y: 240 },
+  { x: 0, y: 280 },
+  { x: -150, y: -120 },
+  { x: 150, y: -120 },
+  { x: -220, y: 40 },
+  { x: 220, y: 40 },
+  { x: -120, y: 140 },
+  { x: 120, y: 140 },
+];
+
+function ScatteredItem({ skill, index }: any) {
+  const pos = SCATTERED_POSITIONS[index % SCATTERED_POSITIONS.length];
+
+  return (
+    <motion.div
+      className="absolute top-1/2 left-1/2 pointer-events-auto"
+      style={{ x: pos.x, y: pos.y }}
+    >
+      <div className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3 w-28 group">
+        <motion.div
+          layoutId={`skill-bubble-${skill.id}`}
+          className="w-14 h-14 bg-card/95 backdrop-blur-md border border-primary/30 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(var(--primary),0.4)] transition-colors duration-300 z-10 cursor-default"
+        >
+          <SkillIcon skill={skill} />
+        </motion.div>
+        
+        <span className="font-semibold text-xs sm:text-sm text-foreground/90 group-hover:text-primary transition-colors whitespace-nowrap text-center">
+          {skill.name}
+        </span>
+      </div>
+    </motion.div>
+  );
+}
+
+function ScatteredLayout() {
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.4, ease: "easeInOut" }}
+      className="absolute inset-0 w-full max-w-6xl mx-auto flex items-center justify-center pointer-events-none"
+    >
+      {coreSkills.map((skill, index) => (
+        <ScatteredItem 
+          key={skill.id} 
+          skill={skill} 
+          index={index} 
+        />
+      ))}
+    </motion.div>
+  );
+}
+
+function SkillIcon({ skill }: { skill: any }) {
+  return skill.iconUrl ? (
+    <img src={skill.iconUrl} alt={skill.name} className="w-8 h-8 object-contain filter drop-shadow-md pointer-events-none" />
+  ) : (
+    skill.fallback && <skill.fallback className="w-7 h-7 text-primary/70 pointer-events-none" />
   );
 }

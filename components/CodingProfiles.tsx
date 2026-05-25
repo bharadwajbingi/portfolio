@@ -63,15 +63,15 @@ export function CodingProfiles() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {profile.codingProfiles.map((profile, index) => {
               const IconComponent =
                 iconMap[profile.icon as keyof typeof iconMap] || Code;
 
               return (
-                <motion.div key={profile.platform} variants={itemVariants}>
-                  <Card className="p-4 text-center bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/60 transition-all duration-200 group">
-                    <div className="flex flex-col items-center space-y-3">
+                <motion.div key={profile.platform} variants={itemVariants} className="w-[calc(50%-0.5rem)] sm:w-[160px] md:w-[180px] lg:w-[200px]">
+                  <Card className="p-4 text-center bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/60 transition-all duration-200 group h-full flex flex-col justify-between">
+                    <div className="flex flex-col items-center space-y-3 flex-1">
                       <div className="p-3 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors duration-200">
                         <IconComponent className="h-6 w-6 text-primary" />
                       </div>
@@ -83,22 +83,22 @@ export function CodingProfiles() {
                           @{profile.username}
                         </p>
                       </div>
-                      <Button
-                        asChild
-                        variant="ghost"
-                        size="sm"
-                        className="h-auto p-1 text-xs"
-                      >
-                        <a
-                          href={profile.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center"
-                        >
-                          Visit <ExternalLink className="ml-1 h-3 w-3" />
-                        </a>
-                      </Button>
                     </div>
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="sm"
+                      className="h-auto p-1 text-xs mt-2"
+                    >
+                      <a
+                        href={profile.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center"
+                      >
+                        Visit <ExternalLink className="ml-1 h-3 w-3" />
+                      </a>
+                    </Button>
                   </Card>
                 </motion.div>
               );
