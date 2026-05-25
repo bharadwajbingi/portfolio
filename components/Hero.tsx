@@ -8,7 +8,7 @@ import { Badge } from './ui/badge';
 import { profile } from '@/data/profile';
 
 export function Hero() {
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleSmoothScroll = (e: React.MouseEvent<any>) => {
     e.preventDefault();
     const element = document.querySelector('#projects');
     if (element) {
@@ -19,7 +19,7 @@ export function Hero() {
     }
   };
 
-  const textVariants = {
+  const textVariants: any = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
       opacity: 1,
@@ -27,7 +27,7 @@ export function Hero() {
       transition: {
         delay: i * 0.1,
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1], // Custom easing for premium feel
+        ease: "easeOut",
       },
     }),
   };
