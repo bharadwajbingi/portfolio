@@ -81,27 +81,22 @@ export function Skills() {
               <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-30" style={{ animationDuration: '2.5s' }} />
             </button>
 
-            {/* MOBILE VIEW - 3-Row Infinite Zigzag Marquee (Icons traveling like cars on winding roads!) */}
-            <div className="flex lg:hidden flex-col gap-5 w-full max-w-md mx-auto overflow-hidden py-4">
+            {/* MOBILE VIEW - 3-Row Infinite Zigzag Marquee (Only glowing floating icons, moving very slowly & subtly!) */}
+            <div className="flex lg:hidden flex-col gap-6 w-full max-w-sm mx-auto overflow-hidden py-4">
               
               {/* Row 1: Left to Right */}
               <div className="relative w-full overflow-hidden flex items-center">
-                <div className="animate-marquee-right flex gap-3.5 pr-3.5">
+                <div className="animate-marquee-right flex gap-8 pr-8" style={{ animationDuration: "55s" }}>
                   {row1Tripled.map((skill, index) => (
                     <div
                       key={`r1-${skill.id}-${index}`}
-                      className="flex flex-col items-center gap-1.5 p-2 bg-card/60 backdrop-blur-xl border border-primary/20 rounded-xl w-[75px] justify-center shadow-sm flex-shrink-0"
+                      className="flex items-center justify-center w-12 h-12 flex-shrink-0"
                     >
-                      <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center border border-primary/10">
-                        <img src={skill.iconUrl || ""} alt={skill.name} className="w-6.5 h-6.5 object-contain" onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = "none";
-                        }} />
-                        {!skill.iconUrl && skill.fallback && <skill.fallback className="w-5.5 h-5.5 text-primary/70" />}
-                      </div>
-                      <span className="text-[9px] font-semibold text-foreground/90 whitespace-nowrap">
-                        {skill.name}
-                      </span>
+                      {skill.iconUrl ? (
+                        <img src={skill.iconUrl} alt={skill.name} className="w-10 h-10 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
+                      ) : (
+                        skill.fallback && <skill.fallback className="w-9 h-9 text-primary/80 pointer-events-none" />
+                      )}
                     </div>
                   ))}
                 </div>
@@ -109,22 +104,17 @@ export function Skills() {
 
               {/* Row 2: Right to Left */}
               <div className="relative w-full overflow-hidden flex items-center">
-                <div className="animate-marquee-left flex gap-3.5 pr-3.5">
+                <div className="animate-marquee-left flex gap-8 pr-8" style={{ animationDuration: "55s" }}>
                   {row2Tripled.map((skill, index) => (
                     <div
                       key={`r2-${skill.id}-${index}`}
-                      className="flex flex-col items-center gap-1.5 p-2 bg-card/60 backdrop-blur-xl border border-primary/20 rounded-xl w-[75px] justify-center shadow-sm flex-shrink-0"
+                      className="flex items-center justify-center w-12 h-12 flex-shrink-0"
                     >
-                      <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center border border-primary/10">
-                        <img src={skill.iconUrl || ""} alt={skill.name} className="w-6.5 h-6.5 object-contain" onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = "none";
-                        }} />
-                        {!skill.iconUrl && skill.fallback && <skill.fallback className="w-5.5 h-5.5 text-primary/70" />}
-                      </div>
-                      <span className="text-[9px] font-semibold text-foreground/90 whitespace-nowrap">
-                        {skill.name}
-                      </span>
+                      {skill.iconUrl ? (
+                        <img src={skill.iconUrl} alt={skill.name} className="w-10 h-10 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
+                      ) : (
+                        skill.fallback && <skill.fallback className="w-9 h-9 text-primary/80 pointer-events-none" />
+                      )}
                     </div>
                   ))}
                 </div>
@@ -132,22 +122,17 @@ export function Skills() {
 
               {/* Row 3: Left to Right */}
               <div className="relative w-full overflow-hidden flex items-center">
-                <div className="animate-marquee-right flex gap-3.5 pr-3.5">
+                <div className="animate-marquee-right flex gap-8 pr-8" style={{ animationDuration: "55s" }}>
                   {row3Tripled.map((skill, index) => (
                     <div
                       key={`r3-${skill.id}-${index}`}
-                      className="flex flex-col items-center gap-1.5 p-2 bg-card/60 backdrop-blur-xl border border-primary/20 rounded-xl w-[75px] justify-center shadow-sm flex-shrink-0"
+                      className="flex items-center justify-center w-12 h-12 flex-shrink-0"
                     >
-                      <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center border border-primary/10">
-                        <img src={skill.iconUrl || ""} alt={skill.name} className="w-6.5 h-6.5 object-contain" onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = "none";
-                        }} />
-                        {!skill.iconUrl && skill.fallback && <skill.fallback className="w-5.5 h-5.5 text-primary/70" />}
-                      </div>
-                      <span className="text-[9px] font-semibold text-foreground/90 whitespace-nowrap">
-                        {skill.name}
-                      </span>
+                      {skill.iconUrl ? (
+                        <img src={skill.iconUrl} alt={skill.name} className="w-10 h-10 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
+                      ) : (
+                        skill.fallback && <skill.fallback className="w-9 h-9 text-primary/80 pointer-events-none" />
+                      )}
                     </div>
                   ))}
                 </div>

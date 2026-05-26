@@ -87,7 +87,7 @@ export function About() {
               <Card className="p-6 sm:p-8 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden">
                 <h3 className="text-2xl font-bold mb-4 text-foreground">Quick Facts</h3>
                 
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {/* Education */}
                   <div className="group flex items-start space-x-3.5 p-2.5 rounded-2xl hover:bg-secondary/40 transition-all duration-300 border border-transparent hover:border-border/50">
                     <div className="p-2.5 bg-primary/10 rounded-xl group-hover:bg-primary/20 group-hover:scale-105 transition-all duration-300 flex-shrink-0">
@@ -151,12 +151,12 @@ export function About() {
                   </div>
 
                   {/* Technical Philosophy (Utilizing empty whitespace beautifully!) */}
-                  <div className="pt-4 border-t border-border/40 mt-4 space-y-3">
+                  <div className="pt-5 border-t border-border/40 mt-5 space-y-3.5">
                     <p className="text-sm font-semibold text-foreground">Technical Philosophy</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
+                    <p className="text-sm leading-relaxed text-muted-foreground/90">
                       Specialized in architecting and developing enterprise-grade backend systems. I focus on building high-performance, fault-tolerant architectures featuring chunk-based batch pipelines, secure stateless authentication, and multi-tenant data isolation.
                     </p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
+                    <p className="text-sm leading-relaxed text-muted-foreground/90">
                       Committed to writing clean, testable, and self-healing code that processes millions of financial transactions with high observability and zero data loss.
                     </p>
                   </div>
