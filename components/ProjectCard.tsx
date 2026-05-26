@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform, Variants } from "framer-motion";
 import { ExternalLink, Github, Star, Code2 } from "lucide-react";
 import Image from "next/image";
@@ -31,6 +31,17 @@ interface ProjectCardProps {
 export function ProjectCard({ project, index }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   
+  // Detect if screen is mobile to disable 3D tilt and prevent overflow skewing
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // 3D Tilt Effect Setup
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -77,18 +88,25 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       variants={cardVariants}
       initial="hidden"
       animate="visible"
-      className="group perspective-[1000px] h-full"
+      className={cn(
+        "group h-full w-full mx-auto max-w-md md:max-w-none",
+        !isMobile && "md:perspective-[1000px]"
+      )}
     >
       <motion.div
         ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
-        className="h-full"
+        onMouseMove={isMobile ? undefined : handleMouseMove}
+        onMouseLeave={isMobile ? undefined : handleMouseLeave}
+        style={
+          isMobile
+            ? { transform: "none" }
+            : {
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d",
+              }
+        }
+        className="h-full w-full"
       >
         <Card
           className={cn(
@@ -97,7 +115,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           )}
         >
           {/* Project Image */}
-          <div className="relative h-[200px] sm:h-[280px] w-full overflow-hidden" style={{ transform: "translateZ(30px)" }}>
+          <div className="relative h-[200px] sm:h-[280px] w-full overflow-hidden" style={isMobile ? {} : { transform: "translateZ(30px)" }}>
             <Image
               src={project.image}
               alt={`${project.title} preview`}
@@ -113,7 +131,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
             {/* Featured Badge */}
             {project.featured && (
-              <div className="absolute top-4 right-4" style={{ transform: "translateZ(40px)" }}>
+              <div className="absolute top-4 right-4" style={isMobile ? {} : { transform: "translateZ(40px)" }}>
                 <Badge
                   variant="secondary"
                   className="bg-primary text-primary-foreground border-none shadow-lg px-3 py-1 font-semibold tracking-wide"
@@ -124,8 +142,8 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               </div>
             )}
 
-            {/* Hover Actions */}
-            <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-black/40 backdrop-blur-[2px]">
+            {/* Hover Actions (Desktop only) */}
+            <div className="hidden md:flex absolute inset-0 items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-black/40 backdrop-blur-[2px]">
               {project.demo && (
                 <motion.div initial={{ y: 20 }} whileHover={{ scale: 1.05 }} className="group-hover:translate-y-0 transition-transform duration-500">
                   <Button asChild size="default" className="rounded-full shadow-xl bg-white text-black hover:bg-gray-100 font-semibold px-6">
@@ -148,12 +166,12 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
 
           {/* Project Content */}
-          <div className="p-6 sm:p-8 flex-1 flex flex-col" style={{ transform: "translateZ(20px)" }}>
-            <div className="flex items-start justify-between mb-4 gap-4">
+          <div className="p-6 sm:p-8 flex-1 flex flex-col" style={isMobile ? {} : { transform: "translateZ(20px)" }}>
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-2 sm:gap-4">
               <h3 className="text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors duration-300">
                 {project.title}
               </h3>
-              <Badge variant="outline" className="text-xs bg-muted/50 whitespace-nowrap">
+              <Badge variant="outline" className="text-xs bg-muted/50 w-fit whitespace-nowrap">
                 {project.category}
               </Badge>
             </div>
@@ -168,7 +186,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                 <Badge
                   key={tech}
                   variant="secondary"
-                  className="text-xs bg-secondary/40 hover:bg-secondary transition-colors py-1 px-3 rounded-md"
+                  className="text-xs bg-secondary/85 dark:bg-secondary/40 border border-border/40 hover:bg-secondary/100 hover:scale-105 transition-all py-1 px-3 rounded-xl shadow-sm"
                 >
                   <Code2 className="h-3 w-3 mr-1.5 text-primary/70" />
                   {tech}
@@ -177,16 +195,16 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             </div>
 
             {/* Mobile Actions (Visible only on touch/mobile screens where hover is not possible) */}
-            <div className="flex gap-3 mt-6 md:hidden">
+            <div className="flex gap-3 mt-6 md:hidden relative z-10">
               {project.demo && (
-                <Button asChild size="sm" className="flex-1 rounded-xl bg-primary text-primary-foreground font-semibold h-10 shadow-md">
+                <Button asChild size="default" className="flex-1 rounded-xl bg-primary text-primary-foreground font-semibold h-10 shadow-md hover:shadow-primary/20 transition-all duration-300">
                   <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
                     <ExternalLink className="h-4 w-4 mr-2" /> Live
                   </a>
                 </Button>
               )}
               {project.github && (
-                <Button asChild variant="outline" size="sm" className="flex-1 rounded-xl border-border/50 bg-secondary/30 text-foreground hover:bg-secondary/50 h-10">
+                <Button asChild variant="outline" size="default" className="flex-1 rounded-xl border-border/50 bg-secondary/30 text-foreground hover:bg-secondary/50 h-10 transition-all duration-300">
                   <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
                     <Github className="h-4 w-4 mr-2" /> Code
                   </a>
