@@ -49,7 +49,7 @@ export function Skills() {
         </div>
 
         {/* Main Interactive Area (Right Side - 65%) */}
-        <div className="relative w-full lg:w-[65%] h-[420px] sm:h-[520px] md:h-[600px] lg:h-[700px] flex items-center justify-center z-10 overflow-visible">
+        <div className="relative w-full lg:w-[65%] h-auto lg:h-[700px] flex items-center justify-center z-10 overflow-visible">
           <MotionConfig transition={{ type: "spring", bounce: 0.15, duration: 1.6 }}>
             
             {/* DESKTOP VIEW (Visible on lg screens and above) */}
@@ -72,17 +72,21 @@ export function Skills() {
               <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-30" style={{ animationDuration: '2.5s' }} />
             </button>
 
-            {/* MOBILE VIEW (Visible on screens below lg) */}
-            <div className="flex lg:hidden absolute w-[320px] h-[320px] items-center justify-center overflow-visible">
-              <MobileOrbitLayout />
-            </div>
-
-            {/* Mobile Decorative Brain Core - Non-clickable glowing core */}
-            <div
-              className="flex lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-card/80 backdrop-blur-xl border-2 border-primary/60 rounded-full w-14 h-14 items-center justify-center shadow-[0_0_60px_rgba(var(--primary),0.6)] pointer-events-none"
-            >
-              <Brain className="w-7 h-7 text-primary animate-pulse" />
-              <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-30" style={{ animationDuration: '2.5s' }} />
+            {/* MOBILE VIEW - Flow of all skills with icons (No brain, no solar on mobile) */}
+            <div className="flex lg:hidden flex-wrap justify-center gap-4 sm:gap-6 w-full max-w-xl mx-auto px-2 py-4">
+              {coreSkills.map((skill) => (
+                <div
+                  key={skill.id}
+                  className="flex flex-col items-center gap-2 p-3 bg-card/60 backdrop-blur-xl border border-primary/20 rounded-2xl w-[85px] sm:w-[95px] justify-center hover:border-primary/50 hover:scale-105 hover:bg-primary/5 transition-all duration-300 shadow-sm"
+                >
+                  <div className="w-12 h-12 bg-secondary/60 dark:bg-secondary/20 rounded-full flex items-center justify-center border border-primary/10 shadow-inner">
+                    <SkillIcon skill={skill} />
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-semibold text-foreground/95 text-center leading-tight whitespace-normal">
+                    {skill.name}
+                  </span>
+                </div>
+              ))}
             </div>
 
           </MotionConfig>
@@ -232,75 +236,5 @@ function SkillIcon({ skill }: { skill: any }) {
     <img src={skill.iconUrl} alt={skill.name} className="w-8 h-8 object-contain filter drop-shadow-md pointer-events-none" />
   ) : (
     skill.fallback && <skill.fallback className="w-7 h-7 text-primary/70 pointer-events-none" />
-  );
-}
-
-
-// --- MOBILE ORBIT LAYOUT (Dedicated, Optimized for mobile & tablet) ---
-function MobileOrbitLayout() {
-  const ring1 = coreSkills.filter(s => s.ring === 1);
-  const ring2 = coreSkills.filter(s => s.ring === 2);
-  const ring3 = coreSkills.filter(s => s.ring === 3);
-
-  return (
-    <div className="relative w-[320px] h-[320px] flex items-center justify-center pointer-events-none">
-      <MobileOrbitRing radius={45} items={ring1} duration={25} />
-      <MobileOrbitRing radius={82} items={ring2} duration={40} reverse />
-      <MobileOrbitRing radius={120} items={ring3} duration={55} />
-    </div>
-  );
-}
-
-function MobileOrbitRing({ radius, items, duration, reverse = false }: { radius: number; items: any[]; duration: number; reverse?: boolean }) {
-  return (
-    <>
-      <div 
-        className="absolute top-1/2 left-1/2 rounded-full border border-primary/20 border-dashed -translate-x-1/2 -translate-y-1/2"
-        style={{ width: radius * 2, height: radius * 2 }}
-      />
-      {items.map((skill, index) => (
-        <MobileOrbitItem 
-          key={skill.id} 
-          skill={skill} 
-          radius={radius} 
-          duration={duration} 
-          reverse={reverse} 
-          index={index} 
-          total={items.length} 
-        />
-      ))}
-    </>
-  );
-}
-
-function MobileOrbitItem({ skill, radius, duration, reverse, index, total }: any) {
-  const time = useTime();
-  const initialAngle = (index / total) * Math.PI * 2;
-  
-  const timeMultiplier = reverse ? -1 : 1;
-  const angularSpeed = (Math.PI * 2) / (duration * 1000) * timeMultiplier;
-
-  const x = useTransform(time, (t) => Math.cos(initialAngle + t * angularSpeed) * radius);
-  const y = useTransform(time, (t) => Math.sin(initialAngle + t * angularSpeed) * radius);
-
-  return (
-    <motion.div 
-      className="absolute top-1/2 left-1/2 -ml-5.5 -mt-5.5 pointer-events-auto"
-      style={{ x, y }}
-    >
-      <div
-        className="relative group w-11 h-11 bg-card/95 backdrop-blur-md border border-primary/30 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.5)] z-10"
-      >
-        <MobileSkillIcon skill={skill} />
-      </div>
-    </motion.div>
-  );
-}
-
-function MobileSkillIcon({ skill }: { skill: any }) {
-  return skill.iconUrl ? (
-    <img src={skill.iconUrl} alt={skill.name} className="w-6.5 h-6.5 object-contain filter drop-shadow-md pointer-events-none" />
-  ) : (
-    skill.fallback && <skill.fallback className="w-5.5 h-5.5 text-primary/70 pointer-events-none" />
   );
 }

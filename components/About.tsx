@@ -56,9 +56,9 @@ export function About() {
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-12 gap-8">
             {/* Bio Section */}
-            <motion.div variants={itemVariants} className="lg:col-span-2 flex flex-col">
+            <motion.div variants={itemVariants} className="w-full lg:col-span-7 flex flex-col">
               <Card className="p-6 sm:p-10 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden group">
                 {/* Subtle gradient shimmer on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -82,35 +82,35 @@ export function About() {
               </Card>
             </motion.div>
 
-            {/* Quick Facts Section */}
-            <motion.div variants={itemVariants} className="flex flex-col">
-              <Card className="p-6 sm:p-10 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden">
-                <h3 className="text-2xl font-bold mb-8 text-foreground">Quick Facts</h3>
+            {/* Quick Facts Section (Hidden on mobile, shown on desktop with wider layout) */}
+            <motion.div variants={itemVariants} className="hidden lg:flex flex-col lg:col-span-5">
+              <Card className="p-6 sm:p-8 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden">
+                <h3 className="text-2xl font-bold mb-4 text-foreground">Quick Facts</h3>
                 
-                <div className="space-y-6">
+                <div className="space-y-2.5">
                   {/* Education */}
-                  <div className="group flex items-start space-x-4 p-4 rounded-2xl hover:bg-secondary/40 transition-colors duration-300 border border-transparent hover:border-border/50">
-                    <div className="p-3 bg-primary/10 rounded-xl group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
-                      <GraduationCap className="h-5 w-5 text-primary" />
+                  <div className="group flex items-start space-x-3.5 p-2.5 rounded-2xl hover:bg-secondary/40 transition-all duration-300 border border-transparent hover:border-border/50">
+                    <div className="p-2.5 bg-primary/10 rounded-xl group-hover:bg-primary/20 group-hover:scale-105 transition-all duration-300 flex-shrink-0">
+                      <GraduationCap className="h-4.5 w-4.5 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-foreground mb-1">Education</p>
+                      <p className="text-sm font-semibold text-foreground mb-0.5">Education</p>
                       <p className="text-sm text-muted-foreground font-medium leading-snug">
                         {profile.personal.quickFacts.degree}
                       </p>
-                      <p className="text-xs text-muted-foreground/70 mt-1">
+                      <p className="text-xs text-muted-foreground/70 mt-0.5">
                         {profile.personal.quickFacts.education}
                       </p>
-                      <Badge variant="secondary" className="mt-2 text-[10px] bg-primary/5 text-primary border-primary/20">
+                      <Badge variant="secondary" className="mt-1.5 text-[10px] bg-primary/5 text-primary border-primary/20">
                         Class of {profile.personal.quickFacts.gradDate}
                       </Badge>
                     </div>
                   </div>
 
                   {/* Location */}
-                  <div className="group flex items-center space-x-4 p-4 rounded-2xl hover:bg-secondary/40 transition-colors duration-300 border border-transparent hover:border-border/50">
-                    <div className="p-3 bg-blue-500/10 rounded-xl group-hover:bg-blue-500/20 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
-                      <MapPin className="h-5 w-5 text-blue-500" />
+                  <div className="group flex items-center space-x-3.5 p-2.5 rounded-2xl hover:bg-secondary/40 transition-all duration-300 border border-transparent hover:border-border/50">
+                    <div className="p-2.5 bg-blue-500/10 rounded-xl group-hover:bg-blue-500/20 group-hover:scale-105 transition-all duration-300 flex-shrink-0">
+                      <MapPin className="h-4.5 w-4.5 text-blue-500" />
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground mb-0.5">Location</p>
@@ -119,15 +119,15 @@ export function About() {
                   </div>
 
                   {/* Email */}
-                  <div className="group flex items-center space-x-4 p-4 rounded-2xl hover:bg-secondary/40 transition-colors duration-300 border border-transparent hover:border-border/50">
-                    <div className="p-3 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
-                      <Mail className="h-5 w-5 text-emerald-500" />
+                  <div className="group flex items-center space-x-3.5 p-2.5 rounded-2xl hover:bg-secondary/40 transition-all duration-300 border border-transparent hover:border-border/50">
+                    <div className="p-2.5 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 group-hover:scale-105 transition-all duration-300 flex-shrink-0">
+                      <Mail className="h-4.5 w-4.5 text-emerald-500" />
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground mb-0.5">Email</p>
                       <a
                         href={`mailto:${profile.personal.email}`}
-                        className="text-sm text-muted-foreground font-medium hover:text-emerald-500 transition-colors duration-200 break-all"
+                        className="text-sm text-muted-foreground font-medium hover:text-emerald-500 transition-colors duration-200"
                       >
                         {profile.personal.email}
                       </a>
@@ -135,9 +135,9 @@ export function About() {
                   </div>
 
                   {/* Phone */}
-                  <div className="group flex items-center space-x-4 p-4 rounded-2xl hover:bg-secondary/40 transition-colors duration-300 border border-transparent hover:border-border/50">
-                    <div className="p-3 bg-purple-500/10 rounded-xl group-hover:bg-purple-500/20 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
-                      <Phone className="h-5 w-5 text-purple-500" />
+                  <div className="group flex items-center space-x-3.5 p-2.5 rounded-2xl hover:bg-secondary/40 transition-all duration-300 border border-transparent hover:border-border/50">
+                    <div className="p-2.5 bg-purple-500/10 rounded-xl group-hover:bg-purple-500/20 group-hover:scale-105 transition-all duration-300 flex-shrink-0">
+                      <Phone className="h-4.5 w-4.5 text-purple-500" />
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground mb-0.5">Phone</p>
