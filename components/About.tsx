@@ -56,9 +56,9 @@ export function About() {
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-12 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8">
             {/* Bio Section */}
-            <motion.div variants={itemVariants} className="w-full lg:col-span-7 flex flex-col">
+            <motion.div variants={itemVariants} className="w-full lg:col-span-2 flex flex-col">
               <Card className="p-6 sm:p-10 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden group">
                 {/* Subtle gradient shimmer on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -150,37 +150,15 @@ export function About() {
                     </div>
                   </div>
 
-                  {/* Connect & Code (Utilizing empty whitespace beautifully!) */}
-                  <div className="pt-4 border-t border-border/40 mt-4">
-                    <p className="text-sm font-semibold text-foreground mb-3">Connect & Code</p>
-                    <div className="flex flex-wrap gap-2">
-                      {profile.social.map((s) => (
-                        <a
-                          key={s.platform}
-                          href={s.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-3 py-1.5 bg-secondary/30 dark:bg-secondary/20 hover:bg-primary/10 border border-border/40 hover:border-primary/30 rounded-xl transition-all duration-300 group hover:scale-105 shadow-sm"
-                        >
-                          <span className="text-xs font-semibold text-muted-foreground group-hover:text-primary transition-colors">
-                            {s.platform}
-                          </span>
-                        </a>
-                      ))}
-                      {profile.codingProfiles.map((cp) => (
-                        <a
-                          key={cp.platform}
-                          href={cp.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-3 py-1.5 bg-secondary/30 dark:bg-secondary/20 hover:bg-primary/10 border border-border/40 hover:border-primary/30 rounded-xl transition-all duration-300 group hover:scale-105 shadow-sm"
-                        >
-                          <span className="text-xs font-semibold text-muted-foreground group-hover:text-primary transition-colors">
-                            {cp.platform}
-                          </span>
-                        </a>
-                      ))}
-                    </div>
+                  {/* Technical Philosophy (Utilizing empty whitespace beautifully!) */}
+                  <div className="pt-4 border-t border-border/40 mt-4 space-y-3">
+                    <p className="text-sm font-semibold text-foreground">Technical Philosophy</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      Specialized in architecting and developing enterprise-grade backend systems. I focus on building high-performance, fault-tolerant architectures featuring chunk-based batch pipelines, secure stateless authentication, and multi-tenant data isolation.
+                    </p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      Committed to writing clean, testable, and self-healing code that processes millions of financial transactions with high observability and zero data loss.
+                    </p>
                   </div>
                 </div>
               </Card>

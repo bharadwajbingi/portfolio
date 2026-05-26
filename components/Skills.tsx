@@ -27,6 +27,15 @@ const coreSkills = [
 export function Skills() {
   const [isOrbit, setIsOrbit] = useState(true);
 
+  // Divide skills into 3 rows for mobile infinite horizontal scroll marquee (zigzag road travel)
+  const row1 = [coreSkills[0], coreSkills[1], coreSkills[2], coreSkills[3], coreSkills[4], coreSkills[5]];
+  const row2 = [coreSkills[6], coreSkills[7], coreSkills[8], coreSkills[9], coreSkills[10]];
+  const row3 = [coreSkills[11], coreSkills[12], coreSkills[13], coreSkills[14], coreSkills[15]];
+
+  const row1Tripled = [...row1, ...row1, ...row1];
+  const row2Tripled = [...row2, ...row2, ...row2];
+  const row3Tripled = [...row3, ...row3, ...row3];
+
   return (
     <section id="skills" className="py-24 overflow-hidden relative border-y border-border/10 bg-background/50 min-h-[800px] flex items-center">
       {/* Deep space glow effect - Reduced opacity to prevent washing out the sharp stars */}
@@ -72,21 +81,78 @@ export function Skills() {
               <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-30" style={{ animationDuration: '2.5s' }} />
             </button>
 
-            {/* MOBILE VIEW - Flow of all skills with icons (No brain, no solar on mobile) */}
-            <div className="flex lg:hidden flex-wrap justify-center gap-4 sm:gap-6 w-full max-w-xl mx-auto px-2 py-4">
-              {coreSkills.map((skill) => (
-                <div
-                  key={skill.id}
-                  className="flex flex-col items-center gap-2 p-3 bg-card/60 backdrop-blur-xl border border-primary/20 rounded-2xl w-[85px] sm:w-[95px] justify-center hover:border-primary/50 hover:scale-105 hover:bg-primary/5 transition-all duration-300 shadow-sm"
-                >
-                  <div className="w-12 h-12 bg-secondary/60 dark:bg-secondary/20 rounded-full flex items-center justify-center border border-primary/10 shadow-inner">
-                    <SkillIcon skill={skill} />
-                  </div>
-                  <span className="text-[10px] sm:text-xs font-semibold text-foreground/95 text-center leading-tight whitespace-normal">
-                    {skill.name}
-                  </span>
+            {/* MOBILE VIEW - 3-Row Infinite Zigzag Marquee (Icons traveling like cars on winding roads!) */}
+            <div className="flex lg:hidden flex-col gap-5 w-full max-w-md mx-auto overflow-hidden py-4">
+              
+              {/* Row 1: Left to Right */}
+              <div className="relative w-full overflow-hidden flex items-center">
+                <div className="animate-marquee-right flex gap-3.5 pr-3.5">
+                  {row1Tripled.map((skill, index) => (
+                    <div
+                      key={`r1-${skill.id}-${index}`}
+                      className="flex flex-col items-center gap-1.5 p-2 bg-card/60 backdrop-blur-xl border border-primary/20 rounded-xl w-[75px] justify-center shadow-sm flex-shrink-0"
+                    >
+                      <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center border border-primary/10">
+                        <img src={skill.iconUrl || ""} alt={skill.name} className="w-6.5 h-6.5 object-contain" onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                        }} />
+                        {!skill.iconUrl && skill.fallback && <skill.fallback className="w-5.5 h-5.5 text-primary/70" />}
+                      </div>
+                      <span className="text-[9px] font-semibold text-foreground/90 whitespace-nowrap">
+                        {skill.name}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Row 2: Right to Left */}
+              <div className="relative w-full overflow-hidden flex items-center">
+                <div className="animate-marquee-left flex gap-3.5 pr-3.5">
+                  {row2Tripled.map((skill, index) => (
+                    <div
+                      key={`r2-${skill.id}-${index}`}
+                      className="flex flex-col items-center gap-1.5 p-2 bg-card/60 backdrop-blur-xl border border-primary/20 rounded-xl w-[75px] justify-center shadow-sm flex-shrink-0"
+                    >
+                      <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center border border-primary/10">
+                        <img src={skill.iconUrl || ""} alt={skill.name} className="w-6.5 h-6.5 object-contain" onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                        }} />
+                        {!skill.iconUrl && skill.fallback && <skill.fallback className="w-5.5 h-5.5 text-primary/70" />}
+                      </div>
+                      <span className="text-[9px] font-semibold text-foreground/90 whitespace-nowrap">
+                        {skill.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Row 3: Left to Right */}
+              <div className="relative w-full overflow-hidden flex items-center">
+                <div className="animate-marquee-right flex gap-3.5 pr-3.5">
+                  {row3Tripled.map((skill, index) => (
+                    <div
+                      key={`r3-${skill.id}-${index}`}
+                      className="flex flex-col items-center gap-1.5 p-2 bg-card/60 backdrop-blur-xl border border-primary/20 rounded-xl w-[75px] justify-center shadow-sm flex-shrink-0"
+                    >
+                      <div className="w-10 h-10 bg-secondary/40 rounded-full flex items-center justify-center border border-primary/10">
+                        <img src={skill.iconUrl || ""} alt={skill.name} className="w-6.5 h-6.5 object-contain" onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                        }} />
+                        {!skill.iconUrl && skill.fallback && <skill.fallback className="w-5.5 h-5.5 text-primary/70" />}
+                      </div>
+                      <span className="text-[9px] font-semibold text-foreground/90 whitespace-nowrap">
+                        {skill.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
 
           </MotionConfig>
