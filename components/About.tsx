@@ -82,12 +82,12 @@ export function About() {
               </Card>
             </motion.div>
 
-            {/* Quick Facts Section (Hidden on mobile, shown on desktop with wider layout) */}
-            <motion.div variants={itemVariants} className="hidden lg:flex flex-col lg:col-span-5">
+            {/* Quick Facts Section (Hidden on mobile, shown on desktop with 50/50 layout) */}
+            <motion.div variants={itemVariants} className="hidden lg:flex flex-col lg:col-span-1">
               <Card className="p-6 sm:p-8 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden">
                 <h3 className="text-2xl font-bold mb-4 text-foreground">Quick Facts</h3>
                 
-                <div className="space-y-2.5">
+                <div className="space-y-4">
                   {/* Education */}
                   <div className="group flex items-start space-x-3.5 p-2.5 rounded-2xl hover:bg-secondary/40 transition-all duration-300 border border-transparent hover:border-border/50">
                     <div className="p-2.5 bg-primary/10 rounded-xl group-hover:bg-primary/20 group-hover:scale-105 transition-all duration-300 flex-shrink-0">
@@ -147,6 +147,39 @@ export function About() {
                       >
                         {profile.personal.phone}
                       </a>
+                    </div>
+                  </div>
+
+                  {/* Connect & Code (Utilizing empty whitespace beautifully!) */}
+                  <div className="pt-4 border-t border-border/40 mt-4">
+                    <p className="text-sm font-semibold text-foreground mb-3">Connect & Code</p>
+                    <div className="flex flex-wrap gap-2">
+                      {profile.social.map((s) => (
+                        <a
+                          key={s.platform}
+                          href={s.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-secondary/30 dark:bg-secondary/20 hover:bg-primary/10 border border-border/40 hover:border-primary/30 rounded-xl transition-all duration-300 group hover:scale-105 shadow-sm"
+                        >
+                          <span className="text-xs font-semibold text-muted-foreground group-hover:text-primary transition-colors">
+                            {s.platform}
+                          </span>
+                        </a>
+                      ))}
+                      {profile.codingProfiles.map((cp) => (
+                        <a
+                          key={cp.platform}
+                          href={cp.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-3 py-1.5 bg-secondary/30 dark:bg-secondary/20 hover:bg-primary/10 border border-border/40 hover:border-primary/30 rounded-xl transition-all duration-300 group hover:scale-105 shadow-sm"
+                        >
+                          <span className="text-xs font-semibold text-muted-foreground group-hover:text-primary transition-colors">
+                            {cp.platform}
+                          </span>
+                        </a>
+                      ))}
                     </div>
                   </div>
                 </div>
