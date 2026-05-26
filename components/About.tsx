@@ -59,7 +59,7 @@ export function About() {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Bio Section */}
             <motion.div variants={itemVariants} className="lg:col-span-2 flex flex-col">
-              <Card className="p-8 sm:p-10 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden group">
+              <Card className="p-6 sm:p-10 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden group">
                 {/* Subtle gradient shimmer on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
@@ -84,7 +84,7 @@ export function About() {
 
             {/* Quick Facts Section */}
             <motion.div variants={itemVariants} className="flex flex-col">
-              <Card className="p-8 sm:p-10 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden">
+              <Card className="p-6 sm:p-10 h-full bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 rounded-3xl relative overflow-hidden">
                 <h3 className="text-2xl font-bold mb-8 text-foreground">Quick Facts</h3>
                 
                 <div className="space-y-6">
@@ -127,7 +127,7 @@ export function About() {
                       <p className="text-sm font-semibold text-foreground mb-0.5">Email</p>
                       <a
                         href={`mailto:${profile.personal.email}`}
-                        className="text-sm text-muted-foreground font-medium hover:text-emerald-500 transition-colors duration-200"
+                        className="text-sm text-muted-foreground font-medium hover:text-emerald-500 transition-colors duration-200 break-all"
                       >
                         {profile.personal.email}
                       </a>

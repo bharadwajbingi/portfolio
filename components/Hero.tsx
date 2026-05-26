@@ -64,11 +64,11 @@ export function Hero() {
 
           {/* Main Title */}
           <motion.div custom={1} variants={textVariants} className="mb-6">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
               <span className="block text-foreground mb-2">
                 Hi, I'm {profile.personal.name}
               </span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary/80 to-primary">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary/80 to-primary leading-tight">
                 {profile.personal.title}
               </span>
             </h1>

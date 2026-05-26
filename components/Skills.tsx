@@ -49,23 +49,25 @@ export function Skills() {
         </div>
 
         {/* Main Interactive Area (Right Side - 65%) */}
-        <div className="relative w-full lg:w-[65%] h-[600px] lg:h-[700px] flex items-center justify-center z-10 overflow-hidden">
+        <div className="relative w-full lg:w-[65%] h-[420px] sm:h-[520px] md:h-[600px] lg:h-[700px] flex items-center justify-center z-10 overflow-hidden">
           <MotionConfig transition={{ type: "spring", bounce: 0.15, duration: 1.6 }}>
             
-            <AnimatePresence mode="popLayout">
-              {isOrbit ? (
-                <OrbitLayout key="orbit" />
-              ) : (
-                <ScatteredLayout key="grid" />
-              )}
-            </AnimatePresence>
+            <div className="absolute w-[700px] h-[700px] flex items-center justify-center scale-[0.48] min-[400px]:scale-[0.58] sm:scale-[0.75] md:scale-[0.85] lg:scale-100 transition-transform duration-300">
+              <AnimatePresence mode="popLayout">
+                {isOrbit ? (
+                  <OrbitLayout key="orbit" />
+                ) : (
+                  <ScatteredLayout key="grid" />
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Toggle Button (The Brain) - STATIC POSITION */}
             <button
               onClick={() => setIsOrbit(!isOrbit)}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-card/80 backdrop-blur-xl border-2 border-primary/60 rounded-full w-24 h-24 flex items-center justify-center shadow-[0_0_60px_rgba(var(--primary),0.6)] group hover:scale-110 transition-transform duration-500 cursor-pointer pointer-events-auto"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-card/80 backdrop-blur-xl border-2 border-primary/60 rounded-full w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center shadow-[0_0_60px_rgba(var(--primary),0.6)] group hover:scale-110 transition-transform duration-500 cursor-pointer pointer-events-auto"
             >
-              <Brain className="w-12 h-12 text-primary" />
+              <Brain className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
               <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-30" style={{ animationDuration: '2.5s' }} />
             </button>
 

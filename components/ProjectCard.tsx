@@ -97,7 +97,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           )}
         >
           {/* Project Image */}
-          <div className="relative h-[280px] w-full overflow-hidden" style={{ transform: "translateZ(30px)" }}>
+          <div className="relative h-[200px] sm:h-[280px] w-full overflow-hidden" style={{ transform: "translateZ(30px)" }}>
             <Image
               src={project.image}
               alt={`${project.title} preview`}
@@ -174,6 +174,24 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                   {tech}
                 </Badge>
               ))}
+            </div>
+
+            {/* Mobile Actions (Visible only on touch/mobile screens where hover is not possible) */}
+            <div className="flex gap-3 mt-6 md:hidden">
+              {project.demo && (
+                <Button asChild size="sm" className="flex-1 rounded-xl bg-primary text-primary-foreground font-semibold h-10 shadow-md">
+                  <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                    <ExternalLink className="h-4 w-4 mr-2" /> Live
+                  </a>
+                </Button>
+              )}
+              {project.github && (
+                <Button asChild variant="outline" size="sm" className="flex-1 rounded-xl border-border/50 bg-secondary/30 text-foreground hover:bg-secondary/50 h-10">
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                    <Github className="h-4 w-4 mr-2" /> Code
+                  </a>
+                </Button>
+              )}
             </div>
           </div>
         </Card>

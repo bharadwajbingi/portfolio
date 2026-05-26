@@ -91,7 +91,7 @@ export function ContactForm() {
           </motion.div>
 
           <motion.div variants={itemVariants} className="max-w-2xl mx-auto">
-            <Card className="p-8 sm:p-10 bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 shadow-2xl rounded-3xl relative overflow-hidden group">
+            <Card className="p-6 sm:p-10 bg-card/60 backdrop-blur-xl border-white/5 dark:border-white/10 shadow-2xl rounded-3xl relative overflow-hidden group">
               {/* Subtle hover glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
               
@@ -108,15 +108,15 @@ export function ContactForm() {
                 <div className="space-y-6">
                   {/* Email */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl bg-secondary/30 hover:bg-secondary/50 border border-transparent hover:border-border/50 transition-all duration-300 gap-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-emerald-500/10 rounded-xl">
+                    <div className="flex items-start sm:items-center space-x-4">
+                      <div className="p-3 bg-emerald-500/10 rounded-xl flex-shrink-0">
                         <Mail className="h-5 w-5 text-emerald-500" />
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-foreground mb-0.5">Email</p>
                         <a
                           href={`mailto:${profile.personal.email}`}
-                          className="text-sm text-muted-foreground font-medium hover:text-emerald-500 transition-colors duration-200"
+                          className="text-sm text-muted-foreground font-medium hover:text-emerald-500 transition-colors duration-200 break-all"
                         >
                           {profile.personal.email}
                         </a>
@@ -135,15 +135,15 @@ export function ContactForm() {
 
                   {/* Phone */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl bg-secondary/30 hover:bg-secondary/50 border border-transparent hover:border-border/50 transition-all duration-300 gap-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-purple-500/10 rounded-xl">
+                    <div className="flex items-start sm:items-center space-x-4">
+                      <div className="p-3 bg-purple-500/10 rounded-xl flex-shrink-0">
                         <Phone className="h-5 w-5 text-purple-500" />
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-foreground mb-0.5">Phone</p>
                         <a
                           href={`tel:${profile.personal.phone}`}
-                          className="text-sm text-muted-foreground font-medium hover:text-purple-500 transition-colors duration-200"
+                          className="text-sm text-muted-foreground font-medium hover:text-purple-500 transition-colors duration-200 break-all"
                         >
                           {profile.personal.phone}
                         </a>
