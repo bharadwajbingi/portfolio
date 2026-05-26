@@ -208,7 +208,7 @@ export const profile: Profile = {
         "Testcontainers",
         "OpenAPI/Swagger",
       ],
-      image: "/images/boilergen.png",
+      image: "/images/tradestream-preview.png",
       demo: "https://d2i9y8go17l95q.cloudfront.net/",
       github: "https://github.com/bharadwajbingi",
       featured: true,
