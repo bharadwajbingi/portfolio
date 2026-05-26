@@ -151,13 +151,10 @@ export function About() {
                   </div>
 
                   {/* Technical Philosophy (Utilizing empty whitespace beautifully!) */}
-                  <div className="pt-5 border-t border-border/40 mt-5 space-y-3.5">
+                  <div className="pt-5 border-t border-border/40 mt-5 space-y-2">
                     <p className="text-sm font-semibold text-foreground">Technical Philosophy</p>
-                    <p className="text-sm leading-relaxed text-muted-foreground/90">
-                      Specialized in architecting and developing enterprise-grade backend systems. I focus on building high-performance, fault-tolerant architectures featuring chunk-based batch pipelines, secure stateless authentication, and multi-tenant data isolation.
-                    </p>
-                    <p className="text-sm leading-relaxed text-muted-foreground/90">
-                      Committed to writing clean, testable, and self-healing code that processes millions of financial transactions with high observability and zero data loss.
+                    <p className="text-sm leading-relaxed text-muted-foreground/90 font-medium">
+                      Specialized in architecting high-performance, fault-tolerant backend systems. I build secure enterprise architectures featuring chunk-based batch pipelines, stateless authentication, and observable processes with zero data loss.
                     </p>
                   </div>
                 </div>
