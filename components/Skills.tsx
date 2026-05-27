@@ -95,8 +95,8 @@ const getSkillDisplay = (skillName: string) => {
 export function Skills() {
   const [isOrbit, setIsOrbit] = useState(true);
 
-  // Divide ALL skills from profile into 4 rows using column-major distribution (top to down, repeating at row 1)
-  const allSkills = profile.skills.flatMap(category => category.skills.map(s => s.name));
+  // Divide CORE skills into 4 rows using column-major distribution (top to down, repeating at row 1)
+  const allSkills = coreSkills.map(s => s.name);
   
   const row1: string[] = [];
   const row2: string[] = [];
