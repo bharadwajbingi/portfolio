@@ -76,14 +76,16 @@ const iconMap: Record<string, { url?: string, icon?: any }> = {
 };
 
 const getSkillDisplay = (skillName: string) => {
-  const match = iconMap[skillName.toLowerCase()] || { icon: Code2 };
+  const core = coreSkills.find(s => s.name === skillName);
+  const iconUrl = core?.iconUrl || iconMap[skillName.toLowerCase()]?.url;
+  const FallbackIcon = core?.fallback || iconMap[skillName.toLowerCase()]?.icon || Code2;
   
   return (
     <div className="flex flex-col items-center justify-center gap-1.5 px-4 group">
-      {match.url ? (
-        <img src={match.url} alt={skillName} className="w-8 h-8 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
+      {iconUrl ? (
+        <img src={iconUrl} alt={skillName} className="w-8 h-8 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
       ) : (
-        <match.icon className="w-7 h-7 text-primary/80 drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
+        <FallbackIcon className="w-7 h-7 text-primary/80 drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
       )}
       <span className="font-medium text-[10px] tracking-wider text-muted-foreground whitespace-nowrap text-center uppercase">
         {skillName}
