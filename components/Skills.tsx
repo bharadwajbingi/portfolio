@@ -101,7 +101,7 @@ export function Skills() {
               
               {/* Row 1: Left to Right */}
               <div className="relative w-full overflow-hidden flex items-center">
-                <div className="animate-marquee-right flex gap-8 pr-8 items-center" style={{ animationDuration: "55s" }}>
+                <div className="animate-marquee-right flex gap-8 pr-8 items-center w-max" style={{ animationDuration: "55s" }}>
                   {row1Tripled.map((skillName, index) => (
                     <div
                       key={`r1-${skillName}-${index}`}
@@ -115,7 +115,7 @@ export function Skills() {
 
               {/* Row 2: Right to Left */}
               <div className="relative w-full overflow-hidden flex items-center">
-                <div className="animate-marquee-left flex gap-8 pr-8 items-center" style={{ animationDuration: "55s" }}>
+                <div className="animate-marquee-left flex gap-8 pr-8 items-center w-max" style={{ animationDuration: "55s" }}>
                   {row2Tripled.map((skillName, index) => (
                     <div
                       key={`r2-${skillName}-${index}`}
@@ -129,7 +129,7 @@ export function Skills() {
 
               {/* Row 3: Left to Right */}
               <div className="relative w-full overflow-hidden flex items-center">
-                <div className="animate-marquee-right flex gap-8 pr-8 items-center" style={{ animationDuration: "55s" }}>
+                <div className="animate-marquee-right flex gap-8 pr-8 items-center w-max" style={{ animationDuration: "55s" }}>
                   {row3Tripled.map((skillName, index) => (
                     <div
                       key={`r3-${skillName}-${index}`}
