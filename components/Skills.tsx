@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence, MotionConfig, useTime, useTransform } from "framer-motion";
-import { Brain, ShieldCheck, Key, UserCheck, Layers, CheckCircle, Cloud } from "lucide-react";
+import { 
+  Brain, ShieldCheck, Key, UserCheck, Layers, CheckCircle, Cloud,
+  Database, DatabaseZap, Globe, Map, Rocket, Zap, FileSearch, Terminal,
+  Server, Boxes, GitBranch, Smartphone, Lock, Hash, Timer, Ghost, Box, Activity, ListChecks,
+  Network, HardDrive, Monitor, Wifi, Component, Layout, RefreshCw, Code2
+} from "lucide-react";
 import { profile } from "@/data/profile";
 
 // Curated list of core technologies
@@ -25,31 +30,90 @@ const coreSkills = [
   { id: "junit", name: "JUnit 5", fallback: CheckCircle, ring: 3 },
 ];
 
+const iconMap: Record<string, { url?: string, icon?: any }> = {
+  "java 17": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" },
+  "spring boot 4.0": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" },
+  "postgresql 15": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
+  "docker": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
+  "python": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+  "typescript": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
+  "aws s3": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
+  "aws ec2": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
+  "github actions ci/cd": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" },
+  "react": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+  "tailwind css": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+  "hibernate orm": { url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/hibernate/hibernate-original.svg" },
+  "sql": { icon: Database },
+  "spring batch": { icon: Layers },
+  "spring security": { icon: ShieldCheck },
+  "spring data jpa": { icon: DatabaseZap },
+  "rest api design": { icon: Globe },
+  "mapstruct": { icon: Map },
+  "flyway migrations": { icon: Rocket },
+  "hikaricp": { icon: Zap },
+  "jpa specifications": { icon: FileSearch },
+  "native sql": { icon: Terminal },
+  "docker compose": { icon: Boxes },
+  "git": { icon: GitBranch },
+  "jwt (hmac-sha256)": { icon: Key },
+  "google oauth2": { icon: UserCheck },
+  "totp 2fa": { icon: Smartphone },
+  "aes-256-gcm": { icon: Lock },
+  "bcrypt": { icon: Hash },
+  "rate limiting": { icon: Timer },
+  "junit 5": { icon: CheckCircle },
+  "mockito": { icon: Ghost },
+  "testcontainers": { icon: Box },
+  "jacoco": { icon: Activity },
+  "parameterized tests": { icon: ListChecks },
+  "data structures & algorithms": { icon: Network },
+  "dbms": { icon: HardDrive },
+  "operating systems": { icon: Monitor },
+  "networking": { icon: Wifi },
+  "oop": { icon: Component },
+  "system design": { icon: Layout },
+  "agile / scrum": { icon: RefreshCw },
+};
+
 const getSkillDisplay = (skillName: string) => {
-  const core = coreSkills.find(s => s.name.toLowerCase() === skillName.toLowerCase() || skillName.toLowerCase().includes(s.name.toLowerCase()));
-  if (core?.iconUrl) {
-    return <img src={core.iconUrl} alt={skillName} className="w-10 h-10 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />;
-  }
-  if (core?.fallback) {
-    const Icon = core.fallback;
-    return <Icon className="w-9 h-9 text-primary/80 pointer-events-none" />;
-  }
-  return <span className="font-semibold text-sm sm:text-base text-foreground/80 drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] whitespace-nowrap px-2">{skillName}</span>;
+  const match = iconMap[skillName.toLowerCase()] || { icon: Code2 };
+  
+  return (
+    <div className="flex flex-col items-center justify-center gap-1.5 px-4 group">
+      {match.url ? (
+        <img src={match.url} alt={skillName} className="w-8 h-8 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
+      ) : (
+        <match.icon className="w-7 h-7 text-primary/80 drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
+      )}
+      <span className="font-medium text-[10px] tracking-wider text-muted-foreground whitespace-nowrap text-center uppercase">
+        {skillName}
+      </span>
+    </div>
+  );
 };
 
 export function Skills() {
   const [isOrbit, setIsOrbit] = useState(true);
 
-  // Divide ALL skills from profile into 3 rows for mobile infinite horizontal scroll marquee (zigzag road travel)
+  // Divide ALL skills from profile into 4 rows using column-major distribution (top to down, repeating at row 1)
   const allSkills = profile.skills.flatMap(category => category.skills.map(s => s.name));
-  const chunkSize = Math.ceil(allSkills.length / 3);
-  const row1 = allSkills.slice(0, chunkSize);
-  const row2 = allSkills.slice(chunkSize, chunkSize * 2);
-  const row3 = allSkills.slice(chunkSize * 2);
+  
+  const row1: string[] = [];
+  const row2: string[] = [];
+  const row3: string[] = [];
+  const row4: string[] = [];
+
+  allSkills.forEach((skill, index) => {
+    if (index % 4 === 0) row1.push(skill);
+    else if (index % 4 === 1) row2.push(skill);
+    else if (index % 4 === 2) row3.push(skill);
+    else row4.push(skill);
+  });
 
   const row1Tripled = [...row1, ...row1, ...row1];
   const row2Tripled = [...row2, ...row2, ...row2];
   const row3Tripled = [...row3, ...row3, ...row3];
+  const row4Tripled = [...row4, ...row4, ...row4];
 
   return (
     <section id="skills" className="py-24 overflow-hidden relative border-y border-border/10 bg-background/50 min-h-[800px] flex items-center">
@@ -96,10 +160,10 @@ export function Skills() {
               <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-30" style={{ animationDuration: '2.5s' }} />
             </button>
 
-            {/* MOBILE VIEW - 3-Row Infinite Zigzag Marquee (Only glowing floating icons/text, moving very slowly & subtly!) */}
+            {/* MOBILE VIEW - 4-Row Infinite Zigzag Marquee */}
             <div className="flex lg:hidden flex-col gap-6 w-full max-w-sm mx-auto overflow-hidden py-4">
               
-              {/* Row 1: Left to Right */}
+              {/* Row 1: Right */}
               <div className="relative w-full overflow-hidden flex items-center">
                 <div className="animate-marquee-right flex gap-8 pr-8 items-center w-max" style={{ animationDuration: "55s" }}>
                   {row1Tripled.map((skillName, index) => (
@@ -113,7 +177,7 @@ export function Skills() {
                 </div>
               </div>
 
-              {/* Row 2: Right to Left */}
+              {/* Row 2: Left */}
               <div className="relative w-full overflow-hidden flex items-center">
                 <div className="animate-marquee-left flex gap-8 pr-8 items-center w-max" style={{ animationDuration: "55s" }}>
                   {row2Tripled.map((skillName, index) => (
@@ -127,12 +191,26 @@ export function Skills() {
                 </div>
               </div>
 
-              {/* Row 3: Left to Right */}
+              {/* Row 3: Right */}
               <div className="relative w-full overflow-hidden flex items-center">
                 <div className="animate-marquee-right flex gap-8 pr-8 items-center w-max" style={{ animationDuration: "55s" }}>
                   {row3Tripled.map((skillName, index) => (
                     <div
                       key={`r3-${skillName}-${index}`}
+                      className="flex items-center justify-center h-12 flex-shrink-0"
+                    >
+                      {getSkillDisplay(skillName)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Row 4: Left */}
+              <div className="relative w-full overflow-hidden flex items-center">
+                <div className="animate-marquee-left flex gap-8 pr-8 items-center w-max" style={{ animationDuration: "55s" }}>
+                  {row4Tripled.map((skillName, index) => (
+                    <div
+                      key={`r4-${skillName}-${index}`}
                       className="flex items-center justify-center h-12 flex-shrink-0"
                     >
                       {getSkillDisplay(skillName)}
