@@ -115,7 +115,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className="antialiased min-h-screen bg-background text-foreground selection:bg-primary/20 selection:text-primary flex flex-col" suppressHydrationWarning>
+      <body className="antialiased min-h-screen bg-background text-foreground selection:bg-primary/20 selection:text-primary flex flex-col overflow-x-hidden" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

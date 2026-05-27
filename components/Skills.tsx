@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, MotionConfig, useTime, useTransform } from "framer-motion";
 import { Brain, ShieldCheck, Key, UserCheck, Layers, CheckCircle, Cloud } from "lucide-react";
+import { profile } from "@/data/profile";
 
 // Curated list of core technologies
 const coreSkills = [
@@ -24,13 +25,27 @@ const coreSkills = [
   { id: "junit", name: "JUnit 5", fallback: CheckCircle, ring: 3 },
 ];
 
+const getSkillDisplay = (skillName: string) => {
+  const core = coreSkills.find(s => s.name.toLowerCase() === skillName.toLowerCase() || skillName.toLowerCase().includes(s.name.toLowerCase()));
+  if (core?.iconUrl) {
+    return <img src={core.iconUrl} alt={skillName} className="w-10 h-10 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />;
+  }
+  if (core?.fallback) {
+    const Icon = core.fallback;
+    return <Icon className="w-9 h-9 text-primary/80 pointer-events-none" />;
+  }
+  return <span className="font-semibold text-sm sm:text-base text-foreground/80 drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] whitespace-nowrap px-2">{skillName}</span>;
+};
+
 export function Skills() {
   const [isOrbit, setIsOrbit] = useState(true);
 
-  // Divide skills into 3 rows for mobile infinite horizontal scroll marquee (zigzag road travel)
-  const row1 = [coreSkills[0], coreSkills[1], coreSkills[2], coreSkills[3], coreSkills[4], coreSkills[5]];
-  const row2 = [coreSkills[6], coreSkills[7], coreSkills[8], coreSkills[9], coreSkills[10]];
-  const row3 = [coreSkills[11], coreSkills[12], coreSkills[13], coreSkills[14], coreSkills[15]];
+  // Divide ALL skills from profile into 3 rows for mobile infinite horizontal scroll marquee (zigzag road travel)
+  const allSkills = profile.skills.flatMap(category => category.skills.map(s => s.name));
+  const chunkSize = Math.ceil(allSkills.length / 3);
+  const row1 = allSkills.slice(0, chunkSize);
+  const row2 = allSkills.slice(chunkSize, chunkSize * 2);
+  const row3 = allSkills.slice(chunkSize * 2);
 
   const row1Tripled = [...row1, ...row1, ...row1];
   const row2Tripled = [...row2, ...row2, ...row2];
@@ -81,22 +96,18 @@ export function Skills() {
               <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-30" style={{ animationDuration: '2.5s' }} />
             </button>
 
-            {/* MOBILE VIEW - 3-Row Infinite Zigzag Marquee (Only glowing floating icons, moving very slowly & subtly!) */}
+            {/* MOBILE VIEW - 3-Row Infinite Zigzag Marquee (Only glowing floating icons/text, moving very slowly & subtly!) */}
             <div className="flex lg:hidden flex-col gap-6 w-full max-w-sm mx-auto overflow-hidden py-4">
               
               {/* Row 1: Left to Right */}
               <div className="relative w-full overflow-hidden flex items-center">
-                <div className="animate-marquee-right flex gap-8 pr-8" style={{ animationDuration: "55s" }}>
-                  {row1Tripled.map((skill, index) => (
+                <div className="animate-marquee-right flex gap-8 pr-8 items-center" style={{ animationDuration: "55s" }}>
+                  {row1Tripled.map((skillName, index) => (
                     <div
-                      key={`r1-${skill.id}-${index}`}
-                      className="flex items-center justify-center w-12 h-12 flex-shrink-0"
+                      key={`r1-${skillName}-${index}`}
+                      className="flex items-center justify-center h-12 flex-shrink-0"
                     >
-                      {skill.iconUrl ? (
-                        <img src={skill.iconUrl} alt={skill.name} className="w-10 h-10 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
-                      ) : (
-                        skill.fallback && <skill.fallback className="w-9 h-9 text-primary/80 pointer-events-none" />
-                      )}
+                      {getSkillDisplay(skillName)}
                     </div>
                   ))}
                 </div>
@@ -104,17 +115,13 @@ export function Skills() {
 
               {/* Row 2: Right to Left */}
               <div className="relative w-full overflow-hidden flex items-center">
-                <div className="animate-marquee-left flex gap-8 pr-8" style={{ animationDuration: "55s" }}>
-                  {row2Tripled.map((skill, index) => (
+                <div className="animate-marquee-left flex gap-8 pr-8 items-center" style={{ animationDuration: "55s" }}>
+                  {row2Tripled.map((skillName, index) => (
                     <div
-                      key={`r2-${skill.id}-${index}`}
-                      className="flex items-center justify-center w-12 h-12 flex-shrink-0"
+                      key={`r2-${skillName}-${index}`}
+                      className="flex items-center justify-center h-12 flex-shrink-0"
                     >
-                      {skill.iconUrl ? (
-                        <img src={skill.iconUrl} alt={skill.name} className="w-10 h-10 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
-                      ) : (
-                        skill.fallback && <skill.fallback className="w-9 h-9 text-primary/80 pointer-events-none" />
-                      )}
+                      {getSkillDisplay(skillName)}
                     </div>
                   ))}
                 </div>
@@ -122,17 +129,13 @@ export function Skills() {
 
               {/* Row 3: Left to Right */}
               <div className="relative w-full overflow-hidden flex items-center">
-                <div className="animate-marquee-right flex gap-8 pr-8" style={{ animationDuration: "55s" }}>
-                  {row3Tripled.map((skill, index) => (
+                <div className="animate-marquee-right flex gap-8 pr-8 items-center" style={{ animationDuration: "55s" }}>
+                  {row3Tripled.map((skillName, index) => (
                     <div
-                      key={`r3-${skill.id}-${index}`}
-                      className="flex items-center justify-center w-12 h-12 flex-shrink-0"
+                      key={`r3-${skillName}-${index}`}
+                      className="flex items-center justify-center h-12 flex-shrink-0"
                     >
-                      {skill.iconUrl ? (
-                        <img src={skill.iconUrl} alt={skill.name} className="w-10 h-10 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] pointer-events-none" />
-                      ) : (
-                        skill.fallback && <skill.fallback className="w-9 h-9 text-primary/80 pointer-events-none" />
-                      )}
+                      {getSkillDisplay(skillName)}
                     </div>
                   ))}
                 </div>
