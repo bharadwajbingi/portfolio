@@ -260,7 +260,7 @@ export const profile: Profile = {
     {
       id: "mphasis-intern",
       company: "Mphasis",
-      position: "Associate Software Engineer",
+      position: "Backend Engineering Intern",
       duration: "Jan 2026 – Apr 2026",
       location: "Chennai, India",
       description: [
