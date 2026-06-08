@@ -118,3 +118,13 @@
 ::view-transition-new(root) {
   z-index: 9999;
 }
+
+/* Keep all animations running during view transition */
+::view-transition-group(*) {
+  animation-play-state: running !important;
+}
+
+html::view-transition-old(root),
+html::view-transition-new(root) {
+  will-change: clip-path;
+}

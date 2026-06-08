@@ -116,16 +116,28 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         >
           {/* Project Image */}
           <div className="relative h-[200px] sm:h-[280px] w-full overflow-hidden" style={isMobile ? {} : { transform: "translateZ(30px)" }}>
-            <Image
-              src={project.image}
-              alt={`${project.title} preview`}
-              fill
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = "/images/project-placeholder.jpg";
-              }}
-            />
+            {!project.demo && !project.github ? (
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-primary/5">
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Code2 className="w-8 h-8 text-primary/60" />
+                  </div>
+                  <p className="text-lg font-semibold text-foreground/80">Building Now</p>
+                  <p className="text-sm text-muted-foreground">Launching Soon</p>
+                </div>
+              </div>
+            ) : (
+              <Image
+                src={project.image}
+                alt={`${project.title} preview`}
+                fill
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "/images/project-placeholder.jpg";
+                }}
+              />
+            )}
             {/* Elegant gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
 

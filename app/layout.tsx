@@ -120,7 +120,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           enableSystem
-          disableTransitionOnChange
+          disableTransitionOnChange={false}
         >
           <StarryBackground />
           <div className="flex-1 relative">{children}</div>
