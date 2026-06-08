@@ -119,12 +119,20 @@
   z-index: 9999;
 }
 
-/* Keep all animations running during view transition */
-::view-transition-group(*) {
-  animation-play-state: running !important;
-}
-
 html::view-transition-old(root),
 html::view-transition-new(root) {
   will-change: clip-path;
+}
+
+/* Prevent orbit from being captured in view transition snapshot */
+#skills {
+  view-transition-name: skills-section;
+}
+
+::view-transition-old(skills-section),
+::view-transition-new(skills-section) {
+  animation: none;
+  mix-blend-mode: normal;
+  height: 100%;
+  overflow: clip;
 }
