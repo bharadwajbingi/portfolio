@@ -12,8 +12,10 @@ export function ThemeToggle() {
   const toggleTheme = async () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
 
+    const doc = document as any;
+
     // If View Transitions API is not supported, just switch normally
-    if (!document.startViewTransition) {
+    if (!doc.startViewTransition) {
       setTheme(newTheme);
       return;
     }
@@ -35,7 +37,7 @@ export function ThemeToggle() {
       Math.max(y, window.innerHeight - y)
     );
 
-    const transition = document.startViewTransition(() => {
+    const transition = doc.startViewTransition(() => {
       setTheme(newTheme);
     });
 
