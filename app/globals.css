@@ -102,3 +102,37 @@
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground) / 0.5);
 }
+
+
+/* View Transition - Circle expand theme toggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+html::view-transition-old(root),
+html::view-transition-new(root) {
+  will-change: clip-path;
+}
+
+/* Prevent orbit from being captured in view transition snapshot */
+#skills {
+  view-transition-name: skills-section;
+}
+
+::view-transition-old(skills-section),
+::view-transition-new(skills-section) {
+  animation: none;
+  mix-blend-mode: normal;
+  height: 100%;
+  overflow: clip;
+}
