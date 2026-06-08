@@ -154,7 +154,7 @@ export function About() {
                   <div className="pt-5 border-t border-border/40 mt-5 space-y-2">
                     <p className="text-sm font-semibold text-foreground">Technical Philosophy</p>
                     <p className="text-sm leading-relaxed text-muted-foreground/90 font-medium">
-                      Specialized in architecting high-performance, fault-tolerant backend systems. I build secure enterprise architectures featuring chunk-based batch pipelines, stateless authentication, and observable processes with zero data loss.
+                      I build backend systems that handle real workloads. Clean code, proper testing, and graceful error handling over buzzwords.
                     </p>
                   </div>
                 </div>
