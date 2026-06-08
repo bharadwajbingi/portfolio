@@ -212,7 +212,7 @@ export const profile: Profile = {
       id: "ai-chat-agent",
       title: "AI Support Chat Agent",
       description:
-        "Real-time AI-powered customer support agent with LLM integration, conversation persistence, session management, and robust error handling. Built end-to-end in TypeScript.",
+        "Real-time AI-powered customer support agent with LLM integration, conversation persistence, session management, and robust error handling. Built end-to-end in TypeScript. Currently building — launching soon.",
       problem:
         "Businesses need always-available customer support that answers FAQs accurately, maintains conversation context, and handles failures gracefully — without human agents.",
       impact:
@@ -229,7 +229,7 @@ export const profile: Profile = {
       demo: undefined,
       github: undefined,
       featured: true,
-      category: "Full-Stack / AI",
+      category: "Full-Stack / AI — Building Now",
     },
     {
       id: "writebase",
