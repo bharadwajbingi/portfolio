@@ -46,7 +46,7 @@ export function Projects() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className={`grid gap-8 ${profile.projects.length === 1 ? 'grid-cols-1 max-w-4xl mx-auto' : 'md:grid-cols-2'}`}>
             {profile.projects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
